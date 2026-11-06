@@ -1,0 +1,56 @@
+AC 0.8.0 (formerly Pocket C++)
+
+The application shell and runner are original MIT-licensed code. The compiler
+is not an original compiler: this app redistributes a relocated subset of
+the open-source Termux LLVM/Clang toolchain and Android NDK headers.
+
+Compiler components (see licenses/ in the APK assets):
+
+* LLVM, Clang, LLD, compiler-rt, libc++: Apache 2.0 with LLVM exceptions and
+  applicable historical LLVM/NCSA licenses. LLVM-LICENSE.txt, NCSA.txt,
+  Apache-2.0.txt. https://github.com/llvm/llvm-project
+* Android NDK/Bionic headers and startup files: respective Apache/BSD/NCSA
+  notices retained in the installed headers. https://android.googlesource.com
+* libffi: MIT license; libffi.txt. https://sourceware.org/libffi/
+* libxml2: MIT license; libxml2.txt. https://gitlab.gnome.org/GNOME/libxml2
+* zlib: zlib license; zlib.txt. https://zlib.net/
+* Zstandard: distributed under its BSD license; zstd-BSD.txt.
+  https://github.com/facebook/zstd
+* GNU libiconv 1.19 shared library: LGPL 2.1 or later; COPYING.LIB and
+  LGPL-2.1.txt. The accompanying source archive includes its complete
+  upstream source and the Termux packaging files used for this component.
+  https://www.gnu.org/software/libiconv/
+
+Package binaries come from https://packages.termux.dev/apt/termux-main/ .
+Exact package versions, URLs and SHA-256 hashes are in packages-lock.json
+in the accompanying source archive. Packaging scripts and patches:
+https://github.com/termux/termux-packages .
+
+Relocation modification: all occurrences of
+  /data/data/com.termux/files/usr
+were changed, with equal byte length, to
+  /data/data/cn.gyf.cxx/files/usr
+by tools/prepare_toolchain.py. Dynamic libraries remain separately linked.
+The source archive provides the app source, relocation script, complete
+libiconv sources so modified libraries can be
+repackaged and installed. No Termux app code is included.
+
+Full license texts are in the APK's assets/licenses directory and in the
+accompanying source archive. This software is provided without warranty.
+
+Experimental debugger: GNU GDB 18.1 (GPLv3+), GNU Readline/GMP/MPFR and other dependencies retain their upstream licenses.
+Debugger package license notices are preserved under dbg/share/doc after extraction. Upstream GNU sources and Termux build/patch material accompany the source ZIP in third_party/debugger. Exact binary versions, URLs and SHA256 values are in debugger-packages-lock.json.
+
+PocketCpp 0.4.2 source-builds GDB with --without-python --without-guile. Their scripting runtimes are not included in this debugger bundle.
+
+Optional OJ reader components (loaded only for user-opened OJ content):
+* KaTeX 0.16.22: MIT, Copyright (c) 2013-2020 Khan Academy and contributors.
+  https://github.com/KaTeX/KaTeX ; complete LICENSE in oj/katex/LICENSE.
+  Includes auto-render and WOFF2 fonts. Uses Android System WebView, no additional browser engine.
+* marked 15.0.12: MIT, Copyright (c) 2011-2025 Christopher Jeffrey.
+  https://github.com/markedjs/marked ; complete license in oj/MARKED_LICENSE.md.
+  Isolated UMD parser used to render user-requested public Luogu problem Markdown.
+No Node.js or Python runtime is added by the OJ integration.
+
+The public repository excludes APK signing keys. Build scripts generate a local
+test key on first build. APK assets retain historical upstream notices.

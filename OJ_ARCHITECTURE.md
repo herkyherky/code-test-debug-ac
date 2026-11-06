@@ -1,0 +1,11 @@
+# OJ integration audit and boundary
+
+Baseline: v0.5.1, cn.gyf.cxx, 24 Java classes, native Android views, Java8/D8/aapt2; minSdk26/targetSdk28. Imports android/java/org.json only. No existing networking, browser or HTML parser. CodeEditorPane/EditorActions/CppCompletion, Toolchain/Judge/OutputDiff, NativeDebugger/DebugVariables/StlVisualizer, FileWorkspace, AppSettings/SettingsPanel/IdeTheme are retained. Baseline before OJ passed 39 tests. Native assets/signature must stay unchanged.
+
+New cn.gyf.cxx.oj package owns adapters, models, exact origin policy, optional platform config, bounded private cache, official public CF API, isolated WebView and screens. MainActivity only bridges its current buffer/file/standard and explicit sample import. No duplicate editor/compiler/test runner. Function problems use a separate user-controlled local driver; submission always uses the unwrapped editor source. Cache removal never removes user drivers or editor files.
+
+Platforms default off; no WebView/network/background jobs until enabled and explicitly opened. Reuse System WebView, no bundled browser engine/Node/Python/remote executable plugins. Use CookieManager with lifecycle flush and scoped clearing; no native JS interfaces, file access, mixed content, SSL bypass, secrets in logs or private API replay. Final submission is always the official website button clicked by the user, not script automation.
+
+Stages: foundation, Codeforces, remaining platform adapters, IDE integration and regression. Public fetch checked before reset: CF1907B 403 (legal fallback required); AtCoder abc400_a 200; Luogu P1001 200. No claimed real account login/submission test without a user-owned authenticated device. LeetCode terms restrict automated scraping; use official/manual workflow, no undocumented GraphQL submission. Luogu forbids submission-record scraping; use official result pages, no automated extraction/polling. AtCoder and Codeforces use explicit single-page extraction; no challenge bypass.
+
+Primary sources checked 2026-11-04: https://codeforces.com/apiHelp ; https://atcoder.jp/tos ; https://info.atcoder.jp/entry/llm-rules-en ; https://help.luogu.com.cn/ula/luogu ; https://www.luogu.com.cn/discuss/1368593 ; https://leetcode.com/terms/ ; https://leetcode.cn/terms/ ; Android WebView/CookieManager documentation.
